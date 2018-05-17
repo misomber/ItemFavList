@@ -17,10 +17,9 @@ avbar-collapse-1" aria-expanded="false">
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    @* ログインしたときに利用できるメニューを描画する *@
                     @if(currentUserOpt.isDefined) {
                     <li>
-                        <a href="#">
+                        <a href="@routes.ItemsController.index(None)">
                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                             @Messages("AddItem")
                         </a>
@@ -52,7 +51,6 @@ avbar-collapse-1" aria-expanded="false">
                     </li>
                     } else {
                     <li><a href="@routes.SignUpController.index()">@Messages("Register")</a></li>
-                    @* リンクを更新 *@
                     <li><a href="@routes.AuthController.index()">@Messages("LogIn")</a></li>
                     }
                 </ul>

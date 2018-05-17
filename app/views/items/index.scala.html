@@ -1,0 +1,28 @@
+@import b3.vertical.fieldConstructor
+
+@(currentUser: User,
+searchForm: Form[Option[String]],
+items: Seq[Item])(implicit messages: Messages, flash: Flash, request: RequestHeader)
+
+@main(Messages("Items"), Some(currentUser)) {
+
+<div class="container">
+    <div class="search">
+        <div class="row">
+            <div class="text-center">
+                @b3.form(routes.ItemsController.index(None), 'class -> "form-inline") {
+                @b3.text(searchForm("keyword"),
+                'placeholder -> "キーワードを入力",
+                'size -> "40",
+                'class -> "form-control input-lg")
+                @b3.submit('class -> "btn btn-success btn-lg") {
+                @Messages("SearchItems")
+                }
+                }
+            </div>
+        </div>
+    </div>
+    @views.html.items.items(items)
+</div>
+
+}
