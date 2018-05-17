@@ -1,0 +1,29 @@
+@import b3.vertical.fieldConstructor
+
+@(currentUserOpt: Option[User], loginForm: Form[Login], rememberme: Form[Boolean])(implicit messages: Messages, flash: Flash, request: RequestHeader)
+
+@main(Messages("Login"), currentUserOpt) {
+
+<div class="row">
+    <div class="col-xs-offset-3 col-xs-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">ログイン</div>
+            <div class="panel-body">
+                @loginForm.globalError.map { error =>
+                <div class="alert alert-warning" role="alert">
+                    @error.message
+                </div>
+                }
+                @b3.formCSRF(routes.AuthController.login()) {
+                    @b3.email(loginForm("email"), '_label -> "Email", 'placeholder -> "example@mail.com")
+                    @b3.password(loginForm("password"), '_label -> "Password", 'placeholder -> "Password")
+                    @b3.checkbox(rememberme("rememberme"), '_label -> "RememberMe")
+                    @b3.submit('class -> "btn btn-primary btn-block") {
+                        @Messages("LogIn")
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
+}

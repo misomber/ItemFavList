@@ -1,4 +1,6 @@
-@()(implicit messages: Messages, flash: Flash, request: RequestHeader)
+@(currentUserOpt: Option[User])(implicit messages: Messages, flash: Flash, request: RequestHeader)
+
+@import b3.vertical.fieldConstructor
 
 <header>
     <nav class="navbar navbar-default navbar-static-top">
@@ -15,8 +17,44 @@ avbar-collapse-1" aria-expanded="false">
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
+                    @* ログインしたときに利用できるメニューを描画する *@
+                    @if(currentUserOpt.isDefined) {
+                    <li>
+                        <a href="#">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                            @Messages("AddItem")
+                        </a>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                               <span class="gravatar">
+                                   <img src="@common.gravatarUrl(currentUserOpt.get.email)?s=20&amp;r=g&amp;d=identicon&amp;d=mm" alt="" class="img-circle">
+                               </span>
+                            @currentUserOpt.get.name
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="#">@Messages("MyPage")</a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                @* *@
+                                @b3.formCSRF(routes.AuthController.logout(), 'name -> "logout", 'style -> "display: none") {
+                                @b3.submit() {
+                                @Messages("LogOut")
+                                }
+                                }
+                                <a href="#" onclick="document.logout.submit();">@Messages("LogOut")</a>
+                            </li>
+                        </ul>
+                    </li>
+                    } else {
                     <li><a href="@routes.SignUpController.index()">@Messages("Register")</a></li>
-                    <li><a href="#">@Messages("LogIn")</a></li>
+                    @* リンクを更新 *@
+                    <li><a href="@routes.AuthController.index()">@Messages("LogIn")</a></li>
+                    }
                 </ul>
             </div>
         </div>

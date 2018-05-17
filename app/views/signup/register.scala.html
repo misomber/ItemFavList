@@ -1,8 +1,8 @@
 @import b3.vertical.fieldConstructor
 
-@(signUpForm: Form[SignUp])(implicit messages: Messages, flash: Flash, request: RequestHeader)
+@(currentUserOpt: Option[User], signUpForm: Form[SignUp])(implicit messages: Messages, flash: Flash, request: RequestHeader)
 
-@main(Messages("SignUp")) {
+@main(Messages("SignUp"), currentUserOpt) {
 
 <div class="row">
     <div class="col-xs-offset-3 col-xs-6">

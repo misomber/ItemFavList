@@ -33,14 +33,14 @@ class SignUpController @Inject()(
   }
 
   def index: Action[AnyContent] = Action { implicit request =>
-    Ok(views.html.signup.register(signUpForm))
+    Ok(views.html.signup.register(None, signUpForm))
   }
 
   def register: Action[AnyContent] = Action { implicit request =>
     signUpForm
       .bindFromRequest()
       .fold(
-        formWithErrors => BadRequest(views.html.signup.register(formWithErrors)), { signUp =>
+        formWithErrors => BadRequest(views.html.signup.register(None, formWithErrors)), { signUp =>
           val now            = ZonedDateTime.now()
           val hashedPassword = signUp.password.bcrypt(salt)
           val user           = User(None, signUp.name, signUp.email, hashedPassword, now, now)

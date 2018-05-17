@@ -3,4 +3,8 @@ GET     /                           controllers.HomeController.index
 GET     /signup                     controllers.SignUpController.index
 POST    /signup                     controllers.SignUpController.register
 
+GET     /login                      controllers.AuthController.index
+POST    /login                      controllers.AuthController.login
+POST    /logout                     controllers.AuthController.logout
+
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
