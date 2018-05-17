@@ -1,1 +1,27 @@
 # https://www.playframework.com/documentation/latest/ScalaI18N
+SearchItems=商品の検索
+Name=名前
+Email=メールアドレス
+Password=パスワード
+Confirm=パスワード(確認)
+RememberMe=ログインを保存
+MemberRegister=会員登録
+SignUp=サインアップ
+Register=新規登録
+LogIn=ログイン
+LogOut=ログアウト
+LoggedIn=ログインしました
+LoggedOut=ログアウトしました
+SignUpSucceeded=サインアップが完了しました。
+AddItem=アイテムを追加
+Home=ホーム
+MyPage=マイページ
+Users=ユーザ一覧
+User=ユーザー
+Items=商品一覧
+Item=商品
+Ranking=ランキング
+InternalError=内部エラーが発生しました
+AuthFailed=メールアドレスもしくはパスワードが不正です。
+PasswordInvalid=パスワードと確認用パスワードが一致しません。
+RakutenAPICallError=楽天との通信がエラーになりました。しばらく待ってから再度お試しください
