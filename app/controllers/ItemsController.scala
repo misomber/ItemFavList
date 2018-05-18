@@ -69,4 +69,17 @@ class ItemsController @Inject()(val userService: UserService,
     searchItems(loggedIn, keywordOpt)
   }
 
+  def show(id: Long): Action[AnyContent] = AsyncStack { implicit request =>
+    val user = loggedIn
+    itemService
+      .getItemById(id)
+      .map { itemOpt =>
+        itemOpt
+          .map { item =>
+            Ok(views.html.items.show(Some(user), item))
+          }
+          .getOrElse(InternalServerError(Messages("InternalError")))
+      }
+  }
+
 }

@@ -1,4 +1,4 @@
-@(currentUserOpt: Option[User])(implicit messages: Messages, flash: Flash, request: RequestHeader)
+@(currentUserOpt: Option[User], items: Seq[Item])(implicit messages: Messages, flash: Flash, request: RequestHeader)
 
 @main(Messages("Home"), currentUserOpt) {
 
@@ -14,7 +14,8 @@
 </div>
 
 <div class="container">
-  テスト
+  @* 商品一覧を描画する *@
+  @views.html.items.items(currentUserOpt, items)
 </div>
 
 }

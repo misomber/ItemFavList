@@ -22,7 +22,7 @@ items: Seq[Item])(implicit messages: Messages, flash: Flash, request: RequestHea
             </div>
         </div>
     </div>
-    @views.html.items.items(items)
+    @views.html.items.items(Some(currentUser), items)
 </div>
 
 }

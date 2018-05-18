@@ -1,5 +1,11 @@
 @(title: String, currentUserOpt: Option[User])(content: Html)(implicit messages: Messages, flash: Flash, request: RequestHeader)
 
+@import helper._
+@javascriptRouter("jsRoutes")(
+    routes.javascript.ItemUserController.want,
+    routes.javascript.ItemUserController.doNotWant
+)
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +15,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
+    <script type="text/javascript" language="javascript" src="@routes.Assets.versioned("javascripts/main.js")"></script>
 </head>
 <body>
 @common.navbar(currentUserOpt)

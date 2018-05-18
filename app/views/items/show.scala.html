@@ -1,0 +1,47 @@
+@(userOpt: Option[User], item: Item)(implicit messages: Messages, flash: Flash, request: RequestHeader)
+
+@main(Messages("Item"), userOpt) {
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 col-sm-6 col-xs-12 col-md-offset-3">
+            <div class="item">
+                <div class="panel panel-default">
+                    <div class="panel-heading text-center">
+                        <img src="@item.imageUrl" alt="" class="">
+                    </div>
+                    <div class="panel-body">
+                        <p class="item-title">@item.name</p>
+                        @views.html.items.buttons(0, userOpt.get, item)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="want-users">
+                <div class="panel panel-default">
+                    <div class="panel-heading text-center">
+                        Wantしたユーザ
+                    </div>
+                    <div class="panel-body">
+                        @for(user <- item.wantUsers) {
+                        <a href="@routes.UsersController.show(user.id.get)">@user.name</a>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="have-users">
+                <div class="panel panel-default">
+                    <div class="panel-heading text-center">
+                        Haveしたユーザ
+                    </div>
+                    <div class="panel-body">
+                        xxx
+                    </div>
+                </div>
+            </div>
+            <p class="text-center"><a href="@item.url" target="_blank">
+                楽天詳細ページへ</a></p>
+        </div>
+    </div>
+</div>
+}

@@ -1,8 +1,9 @@
-@(items: Seq[Item])(implicit messages: Messages, flash: Flash, request: RequestHeader)
+@(currentUserOpt: Option[User], items: Seq[Item])(implicit messages: Messages, flash: Flash, request: RequestHeader)
 
 @if(items.nonEmpty) {
 <div class="row">
-    @for(item <- items) {
+    @for(i <- items.indices) {
+    @defining(items(i)){ item =>
     <div class="item">
         <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="panel panel-default">
@@ -10,13 +11,22 @@
                     <img src="@item.imageUrl">
                 </div>
                 <div class="panel-body">
-                    <p class="item-title">
-                        <a href="#">@item.name</a>
-                    </p>
+                    @* 追加する *@
+                    @if(currentUserOpt.isDefined && item.id.isDefined) {
+                    <p class="item-title"><a href="@routes.ItemsController.show(item.id.get)">@item.name</a></p>
+                    } else {
+                    <p class="item-title"><a href="@item.url">@item.name</a></p>
+                    }
+                    <div class="buttons text-center">
+                        @if(currentUserOpt.isDefined) {
+                        @views.html.items.buttons(i, currentUserOpt.get, item)
+                        }
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    }
     }
 </div>
 }

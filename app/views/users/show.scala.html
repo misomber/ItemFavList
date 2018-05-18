@@ -1,0 +1,31 @@
+@(currentUser: User, targetUser: User, items: Seq[Item])(implicit messages: Messages, flash: Flash, request: RequestHeader)
+
+@main(Messages("User"), Some(currentUser)) {
+<div class="container">
+    <div class="user-profile">
+        <div class="icon text-center">
+            <img src="@common.gravatarUrl(targetUser.email)?s=100&amp;r=g&amp;d=identicon&amp;d=mm" alt="" class="img-circle">
+        </div>
+        <div class="name text-center">
+            <h1>@targetUser.name</h1>
+        </div>
+        <div class="status text-center">
+            <ul>
+                <li>
+                    <div class="status-label">WANT</div>
+                    <div id="want_count" class="status-value">
+                        @targetUser.wantItems.size
+                    </div>
+                </li>
+                <li>
+                    <div class="status-label">HAVE</div>
+                    <div id="have_count" class="status-value">
+                        xxx
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    @views.html.items.items(Some(currentUser), items)
+</div>
+}

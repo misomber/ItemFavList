@@ -1,12 +1,20 @@
-GET     /                           controllers.HomeController.index
+GET     /                      controllers.HomeController.index
 
-GET     /signup                     controllers.SignUpController.index
-POST    /signup                     controllers.SignUpController.register
+GET     /signup                controllers.SignUpController.index
+POST    /signup                controllers.SignUpController.register
 
-GET     /login                      controllers.AuthController.index
-POST    /login                      controllers.AuthController.login
-POST    /logout                     controllers.AuthController.logout
+GET     /login                 controllers.AuthController.index
+POST    /login                 controllers.AuthController.login
+POST    /logout                controllers.AuthController.logout
 
-GET     /items/index                controllers.ItemsController.index(keyword: Option[String])
+GET     /items/index           controllers.ItemsController.index(keyword: Option[String])
+GET     /items/:id             controllers.ItemsController.show(id: Long)
 
-GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+
+# ダサいから変えたい
+POST    /items/want            controllers.ItemUserController.want
+POST    /items/dontWant        controllers.ItemUserController.doNotWant
+
+GET     /users/:id             controllers.UsersController.show(id: Long)
+
+GET     /assets/*file          controllers.Assets.versioned(path="/public", file: Asset)

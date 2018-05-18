@@ -35,7 +35,7 @@ avbar-collapse-1" aria-expanded="false">
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="#">@Messages("MyPage")</a>
+                                <a href="@routes.UsersController.show(currentUserOpt.get.id.get)">@Messages("MyPage")</a>
                             </li>
                             <li role="separator" class="divider"></li>
                             <li>

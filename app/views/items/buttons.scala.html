@@ -1,0 +1,15 @@
+@(index: Int, currentUser: User, item: Item)(implicit messages: Messages, flash: Flash, request: RequestHeader)
+
+<div class="buttons text-center">
+    @if(item.wantUsers.exists(_.id == currentUser.id)) {
+    <buttion id="want@index" class="btn btn-success">Want</buttion>
+    <script type="text/javascript" charset="utf-8">
+           $('#want@index').on('click', function(e) { doNotWant($(this), '@{item.code}'); });
+       </script>
+    } else {
+    <buttion id="want@index" class="btn btn-primary">Want It</buttion>
+    <script type="text/javascript" charset="utf-8">
+           $('#want@index').on('click', function(e) { want($(this), '@{item.code}'); });
+       </script>
+    }
+</div>
