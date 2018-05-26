@@ -1,10 +1,8 @@
 @import b3.vertical.fieldConstructor
 
-@(currentUser: User,
-searchForm: Form[Option[String]],
-items: Seq[Item])(implicit messages: Messages, flash: Flash, request: RequestHeader)
+@(currentUser: User, searchForm: Form[Option[String]], items: Seq[Item])(implicit messages: Messages, flash: Flash, request: RequestHeader)
 
-@main(Messages("Items"), Some(currentUser)) {
+@main(Messages("Item"), Some(currentUser)) {
 
 <div class="container">
     <div class="search">
@@ -22,7 +20,7 @@ items: Seq[Item])(implicit messages: Messages, flash: Flash, request: RequestHea
             </div>
         </div>
     </div>
-    @views.html.items.items(Some(currentUser), items)
+    @views.html.items.items(Some(currentUser), items.map((_, None)))
 </div>
 
 }

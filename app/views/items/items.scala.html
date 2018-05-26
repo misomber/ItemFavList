@@ -1,9 +1,9 @@
-@(currentUserOpt: Option[User], items: Seq[Item])(implicit messages: Messages, flash: Flash, request: RequestHeader)
+@(currentUserOpt: Option[User], items: Seq[(Item, Option[Int])], reload: Boolean = false)(implicit messages: Messages, flash: Flash, request: RequestHeader)
 
 @if(items.nonEmpty) {
 <div class="row">
-    @for(i <- items.indices) {
-    @defining(items(i)){ item =>
+    @for(index <- items.indices) {
+    @defining(items(index)){ case (item, itemCount) =>
     <div class="item">
         <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="panel panel-default">
@@ -11,18 +11,22 @@
                     <img src="@item.imageUrl">
                 </div>
                 <div class="panel-body">
-                    @* 追加する *@
-                    @if(currentUserOpt.isDefined && item.id.isDefined) {
+                    @if(item.id.isDefined) {
                     <p class="item-title"><a href="@routes.ItemsController.show(item.id.get)">@item.name</a></p>
                     } else {
                     <p class="item-title"><a href="@item.url">@item.name</a></p>
                     }
                     <div class="buttons text-center">
                         @if(currentUserOpt.isDefined) {
-                        @views.html.items.buttons(i, currentUserOpt.get, item)
+                        @views.html.items.buttons(index, currentUserOpt.get, item, reload)
                         }
                     </div>
                 </div>
+                @if(itemCount.isDefined) {
+                <div class="panel-footer">
+                    <p class="text-center">@{index + 1}位: @itemCount</p>
+                </div>
+                }
             </div>
         </div>
     </div>

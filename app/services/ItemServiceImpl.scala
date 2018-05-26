@@ -10,17 +10,21 @@ import com.github.j5ik2o.rakutenApi.itemSearch.{
   RakutenItemSearchAPIConfig,
   Item => RakutenItem
 }
-import models.{ Item, ItemUser }
+import models.{ Item, ItemUser, WantHaveType }
 import play.api.Configuration
 import play.api.libs.concurrent.ActorSystemProvider
-import scalikejdbc.{ sqls, DBSession }
+import scalikejdbc.{ sqls, DBSession, select, _ }
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
 import scala.util.Try
 
+import scalikejdbc.interpolation.SQLSyntax.count
+
 @Singleton
-class ItemServiceImpl @Inject()(configuration: Configuration, actorSystemProvider: ActorSystemProvider)
+class ItemServiceImpl @Inject()(configuration: Configuration,
+                                actorSystemProvider: ActorSystemProvider,
+                                itemUserService: ItemUserService)
     extends ItemService {
 
   private implicit val system: ActorSystem = actorSystemProvider.get
@@ -129,6 +133,22 @@ class ItemServiceImpl @Inject()(configuration: Configuration, actorSystemProvide
     Item.allAssociations
       .findAllWithLimitOffset(limit, orderings = Seq(Item.defaultAlias.updateAt.desc))
       .toVector
+  }
+
+  def getItemsByRanking(`type`: WantHaveType.Value)(implicit dbSession: DBSession): Try[Seq[(Item, Int)]] = Try {
+    val i  = Item.syntax("i")
+    val iu = ItemUser.syntax("iu")
+    withSQL {
+      select(count(i.id), i.resultAll)
+        .from(Item as i)
+        .leftJoin(ItemUser as iu)
+        .on(iu.itemId, i.id)
+        .where
+        .eq(iu.`type`, `type`.toString)
+        .groupBy(i.id)
+        .orderBy(count)
+        .desc
+    }.map(rs => (Item(i)(rs), rs.int(1))).list().apply().toVector
   }
 
 }

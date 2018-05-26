@@ -1,4 +1,4 @@
-function want(sender, itemCode) {
+function want(sender, itemCode, reloadFlg) {
    var route = jsRoutes.controllers.ItemUserController.want();
    $.ajax({
        url: route.url,
@@ -11,7 +11,10 @@ function want(sender, itemCode) {
            $(sender).addClass("btn-success");
            $(sender).text("Want");
            $(sender).off('click');
-           $(sender).on('click', function(e){ doNotWant($(sender), itemCode); });
+           $(sender).on('click', function(e){ doNotWant($(sender), itemCode, reloadFlg); });
+           if (reloadFlg) {
+               location.reload();
+           }
        },
        error: function (xhr) {
            alert("Error!: " + xhr.responseText)
@@ -19,7 +22,7 @@ function want(sender, itemCode) {
    });
 }
 
-function doNotWant(sender, itemCode) {
+function doNotWant(sender, itemCode, reloadFlg) {
    var route = jsRoutes.controllers.ItemUserController.doNotWant();
    $.ajax({
        url: route.url,
@@ -32,7 +35,10 @@ function doNotWant(sender, itemCode) {
            $(sender).addClass("btn-primary");
            $(sender).text("Want It");
            $(sender).off('click');
-           $(sender).on('click', function(e){ want($(sender), itemCode); });
+           $(sender).on('click', function(e){ want($(sender), itemCode, reloadFlg); });
+           if (reloadFlg) {
+               location.reload();
+           }
        },
        error: function (xhr) {
            alert("Error!: " + xhr.responseText)

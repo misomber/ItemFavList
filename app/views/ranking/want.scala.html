@@ -1,0 +1,8 @@
+@(currentUser: User, items: Seq[(Item, Option[Int])])(implicit messages: Messages, flash: Flash, request: RequestHeader)
+
+@main(Messages("Ranking"), Some(currentUser)) {
+<div class="container">
+    <h1>Wantランキング</h1>
+    @views.html.items.items(Some(currentUser), items, reload = true)
+</div>
+}
