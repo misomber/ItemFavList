@@ -55,7 +55,8 @@ libraryDependencies ++= Seq(
   "jp.t2v"                 %% "play2-pager-scalikejdbc"      % "0.1.0",
   "mysql"                  % "mysql-connector-java"          % "6.0.6",
   "org.flywaydb"           %% "flyway-play"                  % "3.1.0",
-  "com.github.j5ik2o"      %% "scala-rakuten-item-search-api" % "1.0.3"
+  "com.github.j5ik2o"      %% "scala-rakuten-item-search-api" % "1.0.3",
+  "org.postgresql"         % "postgresql"                    % "42.0.0"
 )
 // Adds additional packages into Twirl
 // TwirlKeys.templateImports ++= Seq(...)
@@ -74,3 +75,15 @@ flywayDriver := envConfig.value.getString("jdbcDriver")
 flywayUrl := envConfig.value.getString("jdbcUrl")
 flywayUser := envConfig.value.getString("jdbcUserName")
 flywayPassword := envConfig.value.getString("jdbcPassword")
+
+herokuJdkVersion in Compile := "1.8"
+
+herokuAppName in Compile := "demo-mono-list"
+
+herokuProcessTypes in Compile := Map(
+  "web" -> s"target/universal/stage/bin/${normalizedName.value} -Dhttp.port=$$PORT -Dconfig.resource=prod/application.conf -Ddb.default.migration.auto=true"
+)
+
+herokuConfigVars in Compile := Map(
+  "JAVA_OPTS" -> "-Xmx512m -Xms512m"
+)
